@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Réalisations - CommEdition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.5rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 45px;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled .logo img {
+            height: 35px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            padding: 150px 2rem 80px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s;
+            animation-fill-mode: both;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--white);
+            padding: 3rem 2rem;
+            margin: -40px auto 0;
+            max-width: 1000px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* Filters */
+        .filters-section {
+            max-width: 1200px;
+            margin: 4rem auto 2rem;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .filter-btn {
+            background: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--bg-light);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary-color);
+            color: var(--white);
+            border-color: var(--secondary-color);
+        }
+
+        /* Gallery */
+        .gallery-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--bg-light), var(--white));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--text-light);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-category {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .project-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .project-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--white);
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 15px;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            margin: 2rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--accent-color);
+            color: var(--white);
+            transform: rotate(90deg);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--bg-light), var(--white));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--text-light);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .modal-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-tag {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .modal-description {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-details {
+            border-top: 2px solid var(--bg-light);
+            padding-top: 1.5rem;
+        }
+
+        .modal-detail-item {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .modal-detail-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            min-width: 150px;
+        }
+
+        .modal-detail-value {
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a252f;
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 60px;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 1rem;
+            }
+
+            .modal-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://commedition.com/wp-content/uploads/2018/11/Commedition-logo-test-600.png" alt="CommEdition Logo">
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#avantages">Avantages</a></li>
+                <li><a href="index.html#metiers">Notre Mission</a></li>
+                <li><a href="realisations.html" class="active">Réalisations</a></li>
+                <li><a href="index.html#apropos">À propos</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Nos Réalisations</h1>
+        <p>Découvrez nos publications dans les médias nationaux de référence. Plus de 3000 articles à fort impact depuis 2008.</p>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">230+</span>
+                <span class="stat-label">Clients accompagnés</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">3000+</span>
+                <span class="stat-label">Articles publiés</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">Années d'expérience</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">8</span>
+                <span class="stat-label">Secteurs d'activité</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <section class="filters-section">
+        <h2 style="color: var(--primary-color); font-size: 2rem; margin-bottom: 0.5rem;">Explorez nos réalisations</h2>
+        <p style="color: var(--text-light);">Filtrez par secteur d'activité</p>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="sante">Santé</button>
+            <button class="filter-btn" data-filter="energie">Énergie</button>
+            <button class="filter-btn" data-filter="luxe">Luxe</button>
+            <button class="filter-btn" data-filter="automobile">Automobile</button>
+            <button class="filter-btn" data-filter="education">Éducation</button>
+            <button class="filter-btn" data-filter="tech">Technologies</button>
+            <button class="filter-btn" data-filter="finance">Finance</button>
+            <button class="filter-btn" data-filter="tourisme">Tourisme</button>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery-section">
+        <div class="gallery-grid" id="gallery">
+            <!-- Projects will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-close" id="modal-close">✕</div>
+            <div class="modal-image" id="modal-image">📰</div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <div class="modal-tags" id="modal-tags"></div>
+                <div class="modal-description" id="modal-description"></div>
+                <div class="modal-details" id="modal-details"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 CommEdition - Agence de communication éditoriale | Tous droits réservés</p>
+    </footer>
+
+    <script>
+        // Project data
+        const projects = [
+            {
+                id: 1,
+                category: 'sante',
+                title: 'Dossier Spécial Rhumatologie',
+                description: 'Publication d\'un dossier de 3 pages dans Le Monde sur les avancées en rhumatologie',
+                icon: '🏥',
+                media: 'Le Monde',
+                year: '2024',
+                format: 'Dossier spécial',
+                details: 'Dossier thématique de 3 pages présentant les dernières innovations en matière de traitement des maladies rhumatismales. Interviews d\'experts, témoignages de patients et analyse des enjeux futurs.'
+            },
+            {
+                id: 2,
+                category: 'energie',
+                title: 'Tribune : La transition énergétique',
+                description: 'Tribune d\'expert sur les enjeux de la transition énergétique en France',
+                icon: '⚡',
+                media: 'Les Échos',
+                year: '2024',
+                format: 'Tribune',
+                details: 'Analyse approfondie des défis et opportunités de la transition énergétique, co-rédigée avec un dirigeant du secteur. Publication pleine page avec infographies.'
+            },
+            {
+                id: 3,
+                category: 'luxe',
+                title: 'Interview : L\'excellence française',
+                description: 'Portrait d\'une maison de haute couture française',
+                icon: '💎',
+                media: 'Le Figaro',
+                year: '2024',
+                format: 'Interview',
+                details: 'Interview exclusive du dirigeant d\'une maison de couture parisienne, évoquant le savoir-faire artisanal et les défis de la transmission.'
+            },
+            {
+                id: 4,
+                category: 'automobile',
+                title: 'Cahier Spécial Mobilité',
+                description: 'Dossier complet sur les nouvelles mobilités urbaines',
+                icon: '🚗',
+                media: 'Le Monde',
+                year: '2023',
+                format: 'Cahier spécial',
+                details: 'Cahier de 4 pages explorant l\'avenir de la mobilité urbaine : véhicules électriques, infrastructures de recharge, et nouveaux usages.'
+            },
+            {
+                id: 5,
+                category: 'education',
+                title: 'Chronique : L\'innovation pédagogique',
+                description: 'Série de chroniques sur les transformations de l\'enseignement supérieur',
+                icon: '🎓',
+                media: 'Les Échos',
+                year: '2024',
+                format: 'Chronique',
+                details: 'Série de 6 chroniques mensuelles explorant les innovations pédagogiques dans les grandes écoles : digitalisation, pédagogies actives, internationalisation.'
+            },
+            {
+                id: 6,
+                category: 'tech',
+                title: 'Dossier IA & Entreprises',
+                description: 'État des lieux de l\'intelligence artificielle dans les entreprises françaises',
+                icon: '💻',
+                media: 'Le Monde',
+                year: '2024',
+                format: 'Dossier',
+                details: 'Panorama complet de l\'adoption de l\'IA en entreprise, avec témoignages de dirigeants, études de cas et perspectives d\'experts.'
+            },
+            {
+                id: 7,
+                category: 'finance',
+                title: 'Tribune Finance Durable',
+                description: 'Point de vue sur l\'investissement responsable',
+                icon: '🏦',
+                media: 'Les Échos',
+                year: '2023',
+                format: 'Tribune',
+                details: 'Tribune signée par un dirigeant de banque sur les enjeux de la finance durable et les critères ESG dans les décisions d\'investissement.'
+            },
+            {
+                id: 8,
+                category: 'sante',
+                title: 'Interview Biotechnologies',
+                description: 'Rencontre avec un pionnier des biotechs françaises',
+                icon: '🔬',
+                media: 'Le Figaro',
+                year: '2024',
+                format: 'Interview',
+                details: 'Portrait d\'un entrepreneur de la biotech, évoquant les innovations thérapeutiques et les défis du développement de nouveaux médicaments.'
+            },
+            {
+                id: 9,
+                category: 'tourisme',
+                title: 'Dossier Tourisme Durable',
+                description: 'Les nouvelles tendances du tourisme responsable',
+                icon: '✈️',
+                media: 'Le Monde',
+                year: '2023',
+                format: 'Dossier',
+                details: 'Exploration des initiatives de tourisme durable en France : écotourisme, labels, engagement des acteurs et attentes des voyageurs.'
+            },
+            {
+                id: 10,
+                category: 'energie',
+                title: 'Cahier Énergies Renouvelables',
+                description: 'Panorama des solutions d\'énergie verte',
+                icon: '🌱',
+                media: 'Les Échos',
+                year: '2024',
+                format: 'Cahier spécial',
+                details: 'Dossier de 6 pages présentant les différentes technologies d\'énergies renouvelables et leur déploiement en France.'
+            },
+            {
+                id: 11,
+                category: 'luxe',
+                title: 'Portrait : Joaillerie d\'exception',
+                description: 'L\'art du bijou selon une maison prestigieuse',
+                icon: '💍',
+                media: 'Le Figaro',
+                year: '2023',
+                format: 'Portrait',
+                details: 'Reportage dans les ateliers d\'une maison de joaillerie, découvrant le savoir-faire des artisans et les créations d\'exception.'
+            },
+            {
+                id: 12,
+                category: 'tech',
+                title: 'Tribune Cybersécurité',
+                description: 'Les enjeux de la sécurité numérique pour les entreprises',
+                icon: '🔐',
+                media: 'Les Échos',
+                year: '2024',
+                format: 'Tribune',
+                details: 'Analyse des menaces cyber actuelles et des stratégies de protection à mettre en place, signée par un expert en cybersécurité.'
+            }
+        ];
+
+        // Render projects
+        function renderProjects(filter = 'all') {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+
+            const filteredProjects = filter === 'all' 
+                ? projects 
+                : projects.filter(p => p.category === filter);
+
+            filteredProjects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <div class="project-image">${project.icon}</div>
+                    <div class="project-content">
+                        <span class="project-category">${getCategoryName(project.category)}</span>
+                        <h3 class="project-title">${project.title}</h3>
+                        <p class="project-description">${project.description}</p>
+                        <div class="project-meta">
+                            <span>📰 ${project.media}</span>
+                            <span>📅 ${project.year}</span>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => openModal(project);
+                gallery.appendChild(card);
+            });
+        }
+
+        // Get category name
+        function getCategoryName(category) {
+            const names = {
+                'sante': 'Santé',
+                'energie': 'Énergie',
+                'luxe': 'Luxe',
+                'automobile': 'Automobile',
+                'education': 'Éducation',
+                'tech': 'Technologies',
+                'finance': 'Finance',
+                'tourisme': 'Tourisme'
+            };
+            return names[category] || category;
+        }
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderProjects(btn.dataset.filter);
+            });
+        });
+
+        // Open modal
+        function openModal(project) {
+            const modal = document.getElementById('modal');
+            document.getElementById('modal-image').textContent = project.icon;
+            document.getElementById('modal-title').textContent = project.title;
+            document.getElementById('modal-tags').innerHTML = `
+                <span class="modal-tag">${getCategoryName(project.category)}</span>
+                <span class="modal-tag">${project.format}</span>
+            `;
+            document.getElementById('modal-description').textContent = project.details;
+            document.getElementById('modal-details').innerHTML = `
+                <div class="modal-detail-item">
+                    <div class="modal-detail-label">Média :</div>
+                    <div class="modal-detail-value">${project.media}</div>
+                </div>
+                <div class="modal-detail-item">
+                    <div class="modal-detail-label">Année :</div>
+                    <div class="modal-detail-value">${project.year}</div>
+                </div>
+                <div class="modal-detail-item">
+                    <div class="modal-detail-label">Format :</div>
+                    <div class="modal-detail-value">${project.format}</div>
+                </div>
+            `;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('modal-close').addEventListener('click', closeModal);
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Initial render
+        renderProjects();
+    </script>
+</body>
+</html>
